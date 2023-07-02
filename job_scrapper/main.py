@@ -15,7 +15,15 @@ options.add_argument('--disable-dev-shm-usage')
 # response = get(f"{base_url}{search_term}")
 
 browser = webdriver.Chrome(options=options)
-browser.get(
-    'https://kr.indeed.com/jobs?q=python&l=&from=searchOnHP&vjk=89395b6ac5014113')
+browser.get("https://kr.indeed.com/jobs?q=python")
+soup = BeautifulSoup(browser.page_source, "html.parser")
 
-print(browser.page_source)
+job_list = soup.find('ul', class_="jobsearch-ResultsList")
+jobs = job_list.find_all('li', recursive=False)
+
+for job in jobs:
+    zone = job.find("div", class_="mosaic-zone")
+    if zone == None:
+        print("job li")
+    else:
+        print("mosaic li")
