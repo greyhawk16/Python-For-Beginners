@@ -18,14 +18,18 @@ def get_page_count(keyword):
     browser.get(f"{base_url}{keyword}{end_url}")
 
     soup = BeautifulSoup(browser.page_source, "html.parser")
-    pagination = soup.find('nav', class_="ecydgvn0")
-    if pagination == None:
-        return 1
-    pages = pagination.find('div', recursive=False)
-    print(len(pages))
+    pagination = soup.find("nav", {"aria-label": "pagination"})
+    pages = pagination.select('div a')
+    count = len(pages)+1
+
+    for page in pages:
+        if (page['aria-label'] == "Previous Page") or (page['aria-label'] == "Next Page"):
+            count -= 1
+
+    return min(count, 5)
 
 
-get_page_count('python')
+print(get_page_count('python'))
 
 
 def extract_indeed_jobs(keyword):
