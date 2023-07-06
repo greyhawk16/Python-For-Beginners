@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
+base_url = '127.0.0.1'
 
 
 @app.route("/")
@@ -8,9 +9,9 @@ def home():
     return render_template("home.html", name='DDG')
 
 
-@app.route('/hello')
+@app.route("/search")
 def hello():
-    return "hello?"
+    return render_template("search.html")
 
 
-app.run('127.0.0.1', debug=True)
+app.run(base_url, debug=True)
