@@ -13,7 +13,7 @@ def home():
 def hello():
     print('request.args: ', request.args)
     print('keyword:      ', request.args.get("keyword"))
-    keyword = request.args.get("keyword")
+    keyword = request.args.get("keyword")  # keyword: user's input
     return render_template("search.html", keyword=keyword)
 
 
